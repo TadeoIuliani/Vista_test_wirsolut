@@ -23,9 +23,9 @@ const FiltrosBusqueda = ({ onFilter }) =>{
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-wrap gap-4 p-4 bg-gray-100 rounded-lg shadow-md">
-      <div>
-        <label className="block text-sm font-medium mb-1">Fecha Desde</label>
+    <form onSubmit={handleSubmit} className="">
+      <div className='input-basic'>
+        <label>Fecha Desde</label>
         <input
           type="date"
           name="fechaDesde"
@@ -35,8 +35,8 @@ const FiltrosBusqueda = ({ onFilter }) =>{
         />
       </div>
 
-      <div>
-        <label className="block text-sm font-medium mb-1">Fecha Hasta</label>
+      <div className='input-basic'>
+        <label>Fecha Hasta</label>
         <input
           type="date"
           name="fechaHasta"
@@ -47,8 +47,8 @@ const FiltrosBusqueda = ({ onFilter }) =>{
       </div>
 
 
-      <div>
-        <label className="block text-sm font-medium mb-1">Destino</label>
+      <div className='input-basic'>
+        <label>Destino</label>
        <select name="destino"  placeholder="Ej. Buenos Aires" value={filters.destino} onChange={handleChange} className="border rounded p-2">
        {destinos.map((ciudad, index) => (
             <option key={index} value={ciudad}>
@@ -59,8 +59,8 @@ const FiltrosBusqueda = ({ onFilter }) =>{
       </div>
 
 
-      <div>
-        <label className="block text-sm font-medium mb-1">Tipo de Vehículo</label>
+      <div className='input-basic'>
+        <label>Tipo de Vehículo</label>
         <select
           name="tipoVehiculo"
           value={filters.tipoVehiculo}
@@ -71,12 +71,11 @@ const FiltrosBusqueda = ({ onFilter }) =>{
           <option value="auto">Auto</option>
           <option value="camion">Camión</option>
           <option value="moto">Moto</option>
-          {/* Agregá más tipos según tu app */}
         </select>
       </div>
 
-      <div>
-        <label className="block text-sm font-medium mb-1">Estado</label>
+      <div className='input-basic'>
+        <label>Estado</label>
         <select
           name="estadoViaje"
           value={filters.estadoViaje}
@@ -87,7 +86,6 @@ const FiltrosBusqueda = ({ onFilter }) =>{
           <option value="Programado">Programado</option>
           <option value="Cancelado">Cancelado</option>
           <option value="Reprogramado">Reprogramado</option>
-          {/* Agregá más tipos según tu app */}
         </select>
       </div>
 

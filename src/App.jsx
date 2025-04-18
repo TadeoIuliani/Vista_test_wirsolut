@@ -37,8 +37,7 @@ function App() {
 
   return (
     <>
-    <h1 className="text-4xl font-bold text-center mt-5">Administrador de viajes</h1>
-
+    <h1>Administrador de viajes</h1>
     <FiltrosBusqueda onFilter={handleFilter} />
 
     {loading && <p className="text-center mt-4">Cargando viajes...</p>}
