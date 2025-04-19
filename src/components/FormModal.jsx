@@ -14,9 +14,6 @@ const FormModal = ({mostrar, cerrar, objetoEditar, postViaje}) =>{
     const [formulario, setFormulario] = useState({
         destino: '',
         fechaDestino: '',
-        fechaDesde: '',
-        estadoViaje: '',
-        clima: '',
         vehiculo: '',
       });
 
@@ -39,30 +36,10 @@ const FormModal = ({mostrar, cerrar, objetoEditar, postViaje}) =>{
     
 
     const handleChange = (e) => {
+        console.log(`${e.target.name} cambiado a: ${e.target.value}`);  // Para verificar el cambio
     setFormulario({ ...formulario, [e.target.name]: e.target.value });
     };
 
-    useEffect(() => {
-        if (objetoEditar) {
-          setFormulario({
-            destino: objetoEditar.destino || '',
-            fechaDestino: objetoEditar.fechaDestino || '',
-            fechaDesde: objetoEditar.fechaDesde || '',
-            estadoViaje: objetoEditar.estadoViaje || '',
-            clima: objetoEditar.clima || '',
-            vehiculo: objetoEditar.vehiculo || '',
-          });
-        } else {
-          setFormulario({
-            destino: '',
-            fechaDestino: '',
-            fechaDesde: '',
-            estadoViaje: '',
-            clima: '',
-            vehiculo: '',
-          });
-        }
-      }, [objetoEditar]);
     
     useEffect(() => {
         getVehiculos();
@@ -71,21 +48,20 @@ const FormModal = ({mostrar, cerrar, objetoEditar, postViaje}) =>{
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log("Formulario a enviar:", formulario); // 
         postViaje(formulario)
         cerrar(); // cerrar el modal después de enviar
     };
     
 
     return(
-
-
         <div className="modal-contenido">
-
 
             <h1>{objetoAEditar ? "Editar" : "Crear"}</h1>
             <form onSubmit={handleSubmit}>
                 <div className='input-basic'>
                 <label>Destino</label>
+                
                     <select
                         name="destino"
                         placeholder="Ej. Buenos Aires"
@@ -93,6 +69,7 @@ const FormModal = ({mostrar, cerrar, objetoEditar, postViaje}) =>{
                         onChange={handleChange}
                         className="border rounded p-2"
                     >
+                        <option value="">Ciudad No registrada</option>
                         {ciudades.map((ciudad) => (
                         <option key={ciudad.ciudadId} value={ciudad.ciudadId}>
                             {ciudad.nombre}
@@ -100,53 +77,6 @@ const FormModal = ({mostrar, cerrar, objetoEditar, postViaje}) =>{
                         ))}
                     </select>
                 </div>
-                
-
-                {objetoEditar && (
-                    <>
-                        <div className='input-basic'>
-                        <label>Estado del viaje</label>
-                        <div className="border rounded p-2 bg-gray-100">
-                            {formulario.estadoViaje || "Sin estado"}
-                        </div>
-                        </div>
-
-                        <div className='input-basic'>
-                        <label>Fecha de creación</label>
-                        <input
-                            type="text"
-                            value={objetoEditar.fechaCreacion || "No especificada"}
-                            disabled
-                            className="border rounded p-2 bg-gray-100"
-                        />
-                        </div>
-
-                        <div className='input-basic'>
-                        <label>Clima</label>
-                        <input
-                            type="text"
-                            name="clima"
-                            value={formulario.clima}
-                            onChange={handleChange}
-                            className="border rounded p-2"
-                        />
-                        </div>
-                    </>
-                    )}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
                 <div className='input-basic'>

@@ -66,10 +66,11 @@ export function UseViajes() {
         try {
             viaje.EstadoViaje = 0;
             viaje.FechaCreacion = new Date().toISOString();
+            viaje.FechaDestino = new Date(viaje.fechaDestino).toISOString();
             viaje.CondicionClima = 0;
 
             const ciudadesResponse = await axios.get(URL_BASE_CIUDADES);
-
+            console.log("Respuesta del servidor:", ciudadesResponse)
             // Verificar si se obtuvo la respuesta de ciudades correctamente
             if (!ciudadesResponse.data || ciudadesResponse.data.length === 0) {
                 throw new Error("No se encontraron ciudades en la respuesta.");
@@ -77,14 +78,29 @@ export function UseViajes() {
     
             // Buscar la ciudad por nombre
             const ciudadEncontrada = ciudadesResponse.data.find(
-                (d) => d.nombre === viaje.ViajeDestino // Buscar dentro de data y comparar el nombre
+                (d) => d.ciudadId ===  parseInt(viaje.destino) // Buscar dentro de data y comparar el nombre
             );
     
             if (!ciudadEncontrada) {
                 throw new Error("Ciudad no encontrada en la base de datos.");
             }
             viaje.CiudadId = ciudadEncontrada.ciudadId;
-            await axios.post(`${URL_BASE}`, viaje)
+
+
+
+            const viajeRequest = {
+                // Convertimos 'destino' y 'vehiculo' a los nombres de campos que el backend espera
+                CiudadId: formulario.destino,  // Este es el ID de la ciudad
+                FechaDestino: formulario.fechaDestino,  // Asegúrate de que la fecha sea un string en formato ISO
+                EstadoViaje: 0,  // Puedes dejar este valor si es siempre el mismo
+                FechaCreacion: new Date().toISOString(),  // Fecha de creación en formato ISO
+                CondicionClima: 0,  // Asumiendo que es siempre el mismo valor
+                VehiculoId: formulario.vehiculo,  // Este es el ID del vehículo
+            };
+            
+
+            await axios.post(`${URL_BASE}`, viajeRequest)
+            await getViajes()
 
         } catch (error) {
             
