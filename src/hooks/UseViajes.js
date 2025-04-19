@@ -8,11 +8,12 @@ const URL_BASE_CIUDADES ="http://localhost:5134/api/Ciudad"
 export function UseViajes() {
     const [viajes, setViajes] = useState([]);
     const [filters, setFilters] = useState({
-        fecha: '',
+        fechaDesde: '',
+        fechaHasta: '',
         destino: '',
         tipoVehiculo: '',
-        estado: ''
-    })
+        estadoViaje: ''
+          })
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null);
 
@@ -23,11 +24,12 @@ export function UseViajes() {
         try {
             const params = {};
 
-            if (filters.fecha) params.fecha = filters.fecha;
+            if (filters.fechaDesde) params.fechaDesde = filters.fechaDesde;
+            if (filters.fechaHasta) params.fechaHasta = filters.fechaHasta;
             if (filters.destino) params.destino = filters.destino;
             if (filters.tipoVehiculo) params.tipoVehiculo = filters.tipoVehiculo;
-            if(filters.estado) params.estado = filters.estado;
-
+            if (filters.estadoViaje) params.estadoViaje = filters.estadoViaje;
+            
             const response = await axios.get(URL_BASE, {params})
             setViajes(response.data);
 

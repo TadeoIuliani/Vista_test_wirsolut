@@ -37,7 +37,7 @@ function App() {
   return (
     <>
     <h1>Administrador de viajes</h1>
-    <FiltrosBusqueda onFilter={() => {}} onAgregarViaje={abrirModal}/>
+    <FiltrosBusqueda onFilter={handleFilter} onAgregarViaje={abrirModal}/>
 
       {mostrarModal && (
         <FormModal 
