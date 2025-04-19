@@ -1,7 +1,9 @@
-import { useState } from 'react';
-import destinos from '../data/ciudades.json'
+import { useState, useEffect } from 'react';
 
-const FiltrosBusqueda = ({ onFilter }) =>{
+import destinos from '../data/ciudades.json'
+import UseCiudades from "../hooks/UseCiudades";
+
+const FiltrosBusqueda = ({ onFilter , onAgregarViaje }) =>{
 
 
   const [filters, setFilters] = useState({
@@ -22,8 +24,37 @@ const FiltrosBusqueda = ({ onFilter }) =>{
     onFilter(filters);
   };
 
+
+  const{
+        ciudades,
+        getCiudades,
+        error,
+        loading
+  } = UseCiudades()
+
+  useEffect(() => {
+        getCiudades();
+  }, []);
+
+
   return (
     <form onSubmit={handleSubmit} className="">
+
+
+      <div id='botones-funcionales'>
+        <div className="self-end">
+          <button
+            type="submit"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+          >
+            Filtrar
+          </button>
+
+          <button onClick={onAgregarViaje} >Agregar Viaje</button>
+      </div>
+
+
+
       <div className='input-basic'>
         <label>Fecha Desde</label>
         <input
@@ -50,9 +81,9 @@ const FiltrosBusqueda = ({ onFilter }) =>{
       <div className='input-basic'>
         <label>Destino</label>
        <select name="destino"  placeholder="Ej. Buenos Aires" value={filters.destino} onChange={handleChange} className="border rounded p-2">
-       {destinos.map((ciudad, index) => (
-            <option key={index} value={ciudad}>
-              {ciudad}
+       {ciudades.map((ciudad) => (
+            <option key={ciudad.ciudadId} value={ciudad.ciudadId}>
+              {ciudad.nombre}
             </option>
           ))}
        </select>
@@ -89,13 +120,6 @@ const FiltrosBusqueda = ({ onFilter }) =>{
         </select>
       </div>
 
-      <div className="self-end">
-        <button
-          type="submit"
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
-        >
-          Filtrar
-        </button>
       </div>
     </form>
   );

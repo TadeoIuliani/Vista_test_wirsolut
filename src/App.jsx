@@ -5,21 +5,19 @@ import FiltrosBusqueda from './components/FiltrosBusqueda';
 import ShowTable from './components/ShowTable';
 import { use } from 'react';
 import UseViajes from './hooks/UseViajes';
+import FormModal from './components/FormModal';
 
 
 import './App.css';
 
 
 function App() {
-  // const { viajes, eliminarViaje, editarViaje } = UseViajes();
-  // useEffect(() => {
-  //   fetch('http://localhost:3000/api/viajes') // reemplazá con tu endpoint real
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       setViajes(data);
-  //     })
-  //     .catch(err => console.error("Error al cargar viajes:", err));
-  // }, []);
+
+  const [mostrarModal, setMostrarModal] = useState(false);
+
+  const abrirModal = () => setMostrarModal(true);
+  const cerrarModal = () => setMostrarModal(false);
+
   
   const {
     viajes,
@@ -27,7 +25,8 @@ function App() {
     error,
     setFilters,
     deleteViaje,
-    updateViaje
+    updateViaje,
+    postViaje
   } = UseViajes();
 
   const handleFilter = (filtros) => {
@@ -38,7 +37,16 @@ function App() {
   return (
     <>
     <h1>Administrador de viajes</h1>
-    <FiltrosBusqueda onFilter={handleFilter} />
+    <FiltrosBusqueda onFilter={() => {}} onAgregarViaje={abrirModal}/>
+
+      {mostrarModal && (
+        <FormModal 
+        mostrar={mostrarModal}
+        cerrar={cerrarModal}
+        objetoEditar={null}
+        postViaje={postViaje}
+        />
+      )}
 
     {loading && <p className="text-center mt-4">Cargando viajes...</p>}
     {error && <p className="text-center text-red-500">{error}</p>}

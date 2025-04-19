@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 
 const URL_BASE = "http://localhost:5134/api/Viaje" // api que tiene que conectar con el backend
 
+const URL_BASE_CIUDADES ="http://localhost:5134/api/Ciudad"
+
 export function UseViajes() {
     const [viajes, setViajes] = useState([]);
     const [filters, setFilters] = useState({
@@ -59,6 +61,36 @@ export function UseViajes() {
             setError("Error al editar el viaje", err);
         }
     }
+
+    const postViaje = async (viaje) =>{
+        try {
+            viaje.EstadoViaje = 0;
+            viaje.FechaCreacion = new Date().toISOString();
+            viaje.CondicionClima = 0;
+
+            const ciudadesResponse = await axios.get(URL_BASE_CIUDADES);
+
+            // Verificar si se obtuvo la respuesta de ciudades correctamente
+            if (!ciudadesResponse.data || ciudadesResponse.data.length === 0) {
+                throw new Error("No se encontraron ciudades en la respuesta.");
+            }
+    
+            // Buscar la ciudad por nombre
+            const ciudadEncontrada = ciudadesResponse.data.find(
+                (d) => d.nombre === viaje.ViajeDestino // Buscar dentro de data y comparar el nombre
+            );
+    
+            if (!ciudadEncontrada) {
+                throw new Error("Ciudad no encontrada en la base de datos.");
+            }
+            viaje.CiudadId = ciudadEncontrada.ciudadId;
+            await axios.post(`${URL_BASE}`, viaje)
+
+        } catch (error) {
+            
+            setError("Error al agregar el viaje: " + error.message);
+        }
+    }
     
     useEffect(()=> {
         getViajes()
@@ -73,7 +105,8 @@ export function UseViajes() {
         setFilters, // para que puedas cambiar los filtros desde el componente de UI
         refetch: getViajes, // opcional si querés forzar la recarga
         deleteViaje,
-        updateViaje
+        updateViaje,
+        postViaje
       };
     
 }
