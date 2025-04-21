@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-const URL_BASE = "http://localhost:5134/api/Ciudad" // api que tiene que conectar con el backend
+const URL_BASE = import.meta.env.VITE_URL_BASE_CIUDADES // api que tiene que conectar con el backend
 
 export function UseCiudades() {
     const [ciudades, setCiudades] = useState([]);

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-const URL_BASE = "http://localhost:5134/api/Vehiculo" // api que tiene que conectar con el backend
+const URL_BASE = import.meta.env.VITE_URL_BASE_VEHICULOS // api que tiene que conectar con el backend
 
 export function UseVehiculos() {
     const [vehiculos, setVehiculos] = useState([]);
