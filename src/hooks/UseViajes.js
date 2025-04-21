@@ -121,8 +121,8 @@ export function UseViajes() {
         viajes,
         loading,
         error,
-        setFilters, // para que puedas cambiar los filtros desde el componente de UI
-        refetch: getViajes, // opcional si querés forzar la recarga
+        setFilters,
+        refetch: getViajes,
         deleteViaje,
         updateViaje,
         postViaje
