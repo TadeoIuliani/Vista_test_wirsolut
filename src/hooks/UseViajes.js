@@ -32,6 +32,7 @@ export function UseViajes() {
             
             const response = await axios.get(URL_BASE, {params})
             setViajes(response.data);
+            console.log("Enviando filtros al backend:", params);
 
         } catch (error) {
             setError("Error en la carga de viajes.");

@@ -1,14 +1,19 @@
 import { useState, useEffect } from 'react';
 
-import destinos from '../data/ciudades.json'
 import UseCiudades from "../hooks/UseCiudades";
+
+
+
+const hoy = new Date(Date.now()).toISOString().split('T')[0]; //.toISOsString hace el formato (2025-04-20T03:00:00.000Z)Ejemplo
+const siguienteSemana = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]; //(7 * 24 * 60 * 60 * 1000) = 1 semana en milisegundos
+
 
 const FiltrosBusqueda = ({ onFilter , onAgregarViaje }) =>{
 
 
   const [filters, setFilters] = useState({
-    fechaDesde: '',
-    fechaHasta: '',
+    fechaDesde: hoy,
+    fechaHasta: siguienteSemana,
     destino: '',
     tipoVehiculo: '',
     estadoViaje: ''
@@ -48,6 +53,7 @@ const FiltrosBusqueda = ({ onFilter , onAgregarViaje }) =>{
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
           >
             Filtrar
+            
           </button>
 
           <button onClick={onAgregarViaje} >Agregar Viaje</button>
@@ -81,8 +87,9 @@ const FiltrosBusqueda = ({ onFilter , onAgregarViaje }) =>{
       <div className='input-basic'>
         <label>Destino</label>
        <select name="destino"  placeholder="Ej. Buenos Aires" value={filters.destino} onChange={handleChange} className="border rounded p-2">
+       <option value="">Todos</option>
        {ciudades.map((ciudad) => (
-            <option key={ciudad.ciudadId} value={ciudad.ciudadId}>
+            <option key={ciudad.ciudadId} value={ciudad.nombre}>
               {ciudad.nombre}
             </option>
           ))}
@@ -114,9 +121,12 @@ const FiltrosBusqueda = ({ onFilter , onAgregarViaje }) =>{
           className="border rounded p-2"
         >
           <option value="">Todos</option>
-          <option value="Programado">Programado</option>
-          <option value="Cancelado">Cancelado</option>
-          <option value="Reprogramado">Reprogramado</option>
+          <option value="0">Programado</option>
+          <option value="1">Cancelado</option>
+          <option value="2">Reprogramado</option>
+          <option value="3">Finalizado</option>
+          <option value="4">En curso</option>
+
         </select>
       </div>
 

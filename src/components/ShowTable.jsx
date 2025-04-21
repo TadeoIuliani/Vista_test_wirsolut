@@ -42,21 +42,24 @@ const ShowTable = ({viajes, eliminarViaje, editarViaje}) =>{
                         <td>{new Date(v.fechaDestino).toLocaleString('es-AR')}</td>
                         <td className="estado">
                         {
-                            v.estadoViaje = 0 ? "Programado" :
-                            v.estadoViaje = 1 ? "Cancelado" :
-                            "Reprogramado" 
+                            v.estadoViaje === 0 ? "Programado" :
+                            v.estadoViaje === 1 ? "Cancelado" :
+                            v.estadoViaje === 2 ? "Reprogramado" :
+                            v.estadoViaje === 3 ? "Finalizado" :
+                            v.estadoViaje === 4 ? "En Curso" :
+                            "Estado desconocido" // Valor por defecto en caso de que no coincida con ningún valor
                         }
                         </td>
                         <td className="clima">
-                            {
-                            v.condicionClima = 0 ? "Inestable" :
+                        {
+                            v.condicionClima = 0 ? "Inestable":
                             v.condicionClima = 1 ? "Condiciones Optimas" :
                             "-"
                             }
                             </td>
                         <td>
-                        <button onClick={() => handleEditar(v.viajeId)}>Editar</button>
-                        <button onClick={() => handleEliminar(v.viajeId)}>Eliminar</button>
+                        <button className="editar" onClick={() => handleEditar(v.viajeId)}>Editar</button>
+                        <button className="eliminar" onClick={() => handleEliminar(v.viajeId)}>Eliminar</button>
                         </td>
                     </tr>
                     ))
