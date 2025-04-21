@@ -38,6 +38,7 @@ Esto iniciará la aplicación en modo desarrollo en http://localhost:5173
 ## Estructura básica del proyecto
 
 src/
+
 ├── components/         
 ├── hooks/             
 ├── App.jsx             
